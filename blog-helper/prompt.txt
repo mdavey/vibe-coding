@@ -1,0 +1,76 @@
+Program: Simple editor for adding and editing markdown files.
+Programming lanuage: Python 3.9+
+UI library: TK
+Platform: Windows
+Code location:  blog-helper/
+Entry point:  blog-helper/blog-helper.py
+
+Please try to only use inbuild libraries
+
+These markdown files will be used to generate a blog using hugo.
+
+All the setup work for Hugo has alerady been done.  This is just for the UI for an editor.
+
+The program will work on files inside the directory:  C:\Users\Matthewd\Documents\GitHub\project-2501.net\content
+
+The program should have a menu bar, large text area for editing, and a status bar.
+
+The program should be able to edit an existing MD (Markdown) file  (with the default directory already set)
+
+The textarea should show the contents of the file, without any syntax formating or spell checking.
+
+The following actions should be in the "File" menu:
+
+ * New
+ * Open..
+ * Save
+ * Save As..
+ * Exit
+
+The following actions should be in the "Insert" menu:
+
+ * Insert Image:  Allow the user to select a file, and insert the full filename into the text editor (at the current position)
+ * Insert Youtube Link:  Ask for a link and insert the full link into the text editor (at the current position)
+
+The following actions should be in the "Tools" menu:
+
+ * Render with Hugo:  Disabled, and not implemented.
+ * Preview with Hugo:  Disabled, and not implemented.
+
+Basic UI: 115k tokens, $0.04
+
+------------------
+
+Let's implement the insert image command for the blog-helper/blog-helper.py program
+
+If the file hasn't been saved, this command do nothing, and tell the user that it only works after the current file has a name.
+
+Show a open dialog box to the user allowing them to select an image  (jpg, jpeg, png, webp, gif, avif).
+
+Using the ImageMagik command (by calling the binary in the IMAGEMAGICK_BIN constant)
+
+Create two versions of the selected image:  
+
+* Image 1:  A webp file resized to around 1920x1080  (respecting aspect ratio) and having a fairly good quality.
+* Image 2:  A webp file resized to a maxiumu width of 600px  (again respecing aspect radio) and having an average quality.
+
+The first file should be name after selected filename with "_web" added to the end.
+The second file (the thumbnail) should be named after the select filename, but with _web_thumb added to the end.
+
+Both of these files shoud be saved (or copied if needed) to the directory of the current markdown file that's being edited.
+
+Instead of just inserting full filename of the image into the text area.  Insert text following this template:
+
+```
+[ {{< webp {FILENAME}_web_thumb >}} ]( {{< static "{FILENAME}_web.webp" >}} )
+```
+
+For example, if a user selected the file:  "c:\hello\world.png".  
+
+The first file should be world_web.webp and the second file should be named world_web_thumb.webp.
+
+And the text that gets added the edit area should be:
+
+```
+[ {{< webp world_web_thumb >}} ]( {{< static "world_web.webp" >}} )
+```
